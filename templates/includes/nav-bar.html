@@ -1,0 +1,44 @@
+<div class="flex-shrink-0 p-3" style="width: 280px;">
+  <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+    <svg class="bi pe-none me-2" width="30" height="24">
+      <use xlink:href="#bootstrap"></use>
+    </svg>
+    <span class="fs-5 fw-semibold">#TODO</span>
+  </a>
+  <ul class="list-unstyled ps-0">
+    <li class="mb-1">
+      <a href="{% url 'todo_app:index' %}">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+          Home
+        </button>
+      </a>
+    </li>
+    <li class="mb-1">
+      <a href="{% url 'todo_app:tags' %}">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+          Tags
+        </button>
+      </a>
+    </li>
+    <li class="border-top my-3"></li>
+    <li class="mb-1">
+      {% if request.user %}
+      <a href="{% url 'logout' %}">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+          Logout
+        </button>
+      </a>
+        {% else %}
+      <a href="{% url 'logout' %}">
+        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+          Login
+        </button>
+      </a>
+      {% endif %}
+    </li>
+  </ul>
+</div>

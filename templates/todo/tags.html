@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h5 style="text-align: center; margin: 40px; background-color: darkgrey; color: white; font-size: 88px; border-radius: 20px">Tags list</h5>
+
+  {% if tags %}
+    <div class="container mt-5 card pt-lg-3">
+        <a href="{% url 'todo_app:create-tag' %}"><button class="btn btn-outline-primary">Create tag</button></a>
+
+      <br>
+      {% for task in tags %}
+        <div class="card d-flex justify-content-xxl-between">
+        {{ task }}
+        <a class="d-inline" href="{% url 'todo_app:tag-update' task.id %}"><button class="btn btn-outline-primary">Update</button></a>
+        <a class="d-inline" href="{% url 'todo_app:tag-delete' task.id %}"><button class="btn btn-outline-danger">Delete</button></a>
+      </div>
+        <hr>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <p>There are no tags!!!</p>
+  {% endif %}
+
+{% endblock %}

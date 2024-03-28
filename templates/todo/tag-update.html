@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block content %}
+  <div style="padding: 15px; margin: 15px">
+    <h2 class="custom-header" style="text-align: center">Refactor tag</h2>
+    <form method="post" action="" enctype="multipart/form-data" novalidate>
+      {{ form | crispy }}
+      {% csrf_token %}
+      <button class="btn btn-primary" type="submit">Refactor</button>
+    </form>
+    <br>
+  </div>
+{% endblock %}

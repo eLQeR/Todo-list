@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<h5 style="text-align: center; margin: 40px; background-color: darkgrey; color: white; font-size: 88px; border-radius: 20px">TODO list</h5>
+<a class="btn btn-outline-primary" href="{% url 'todo_app:create-task' %}">Create task</a>
+  {% if tasks %}
+    <div class="container mt-5 card pt-lg-3">
+      <br>
+      {% for task in tasks %}
+        <div class="container">
+          <div class="row">
+          <div class="d-flex justify-content-center"><div class="badge badge-light d-inline mb-2 mt-2" style="margin-left: 5px; font-size: 28px; text-align: center; background-color: white" >{{ task.name }}</div></div>
+            <div class="col-md-9">
+              <br>
+                <div class="btn btn-outline-info" style="display: inline">
+                  {% if task.deadline %}
+                  Deadline: {{ task.get_deadline }}
+                  {% else %}
+                  Deadline: None
+                  {% endif %}
+                </div>
+            <div class="btn btn-outline-danger" style="display: inline">
+                  Completed: {{ task.is_completed }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col" style="max-height: 250px; overflow: hidden">
+                  <br>
+                  <div class="btn btn-outline-dark disabled" >
+                {{ task.description }}
+                </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="col-4 d-flex flex-column justify-content-end pb-2" style="align-items: end">
+                  <br>
+                  <br>
+                  <br>
+                  <a href="{% url 'todo_app:task-detail' task.id %}" class="btn btn-outline-primary">
+                    Detail
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <br>
+        <hr style="height: 2px; background-color: black;">
+        <br>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <p>There are no tasks!!!</p>
+  {% endif %}
+
+{% endblock %}
