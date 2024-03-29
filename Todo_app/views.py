@@ -87,34 +87,7 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("todo_app:index")
 
 
-class TaskDoneView(LoginRequiredMixin, generic.UpdateView):
-    model = Task
-    form_class = TaskForm
-    template_name = "todo/task-confirm-done.html"
-    context_object_name = "task"
-
-    def get(self, request, *args, **kwargs):
-        task = self.get_object()
-        if request.user != task.creator and request.user not in task.assignees.all():
-            return HttpResponseForbidden()
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        task = self.get_object()
-        if request.user != task.creator and request.user not in task.assignees.all():
-            return HttpResponseForbidden()
-        task.is_completed = True
-        task.save()
-        return HttpResponseRedirect(reverse_lazy("todo_app:index"))
-
-class UserCreateView(generic.CreateView):
-    model = Worker
-    form_class = UserRegisterForm
-    template_name = "registration/sign-up.html"
-    success_url = reverse_lazy("todo_app:index")
-
-
-class TaskUndoView(LoginRequiredMixin, generic.UpdateView):
+class TaskUndoDoneView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "todo/task-confirm-undo.html"
@@ -130,6 +103,12 @@ class TaskUndoView(LoginRequiredMixin, generic.UpdateView):
         task = self.get_object()
         if request.user != task.creator and request.user not in task.assignees.all():
             return HttpResponseForbidden()
-        task.is_completed = True
+        task.is_completed = not task.is_completed
         task.save()
         return HttpResponseRedirect(reverse_lazy("todo_app:index"))
+
+class UserCreateView(generic.CreateView):
+    model = Worker
+    form_class = UserRegisterForm
+    template_name = "registration/sign-up.html"
+    success_url = reverse_lazy("todo_app:index")
