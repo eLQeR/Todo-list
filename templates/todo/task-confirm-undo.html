@@ -2,18 +2,24 @@
 
 {% block content %}
 
-  <h1 style="text-align: center">Do you want to undo task?</h1>
+  <h1 style="text-align: center">Do you want to do this?</h1>
   <br>
   <div class="d-flex justify-content-center">
     {% if request.user == task.creator %}
 
-      <form action="{% url 'todo_app:task-undo' task.id %}" method="post">
+      <form action="{% url 'todo_app:task-undo-done' task.id %}" method="post">
         <a href="{% url 'todo_app:task-detail' task.id %}" class="btn  btn-outline-info">
         Return
       </a>
-        <button  class="btn  btn-outline-success" type="submit"
-        >Undo
+        {% if task.is_completed %}
+        <button  class="btn  btn-outline-danger" type="submit">
+          Undo
         </button>
+        {% else %}
+        <button  class="btn  btn-outline-success" type="submit">
+          Done
+        </button>
+        {% endif %}
         {% csrf_token %}
       </form>
     {% endif %}
